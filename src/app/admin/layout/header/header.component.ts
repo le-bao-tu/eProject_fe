@@ -23,10 +23,8 @@ export class HeaderComponent implements OnInit {
     if(tokenDecode != null) {
       this.email = tokenDecode["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
       this.accountService.GetByNameToken(this.email).subscribe((res:any) => {
-        console.log(res);
         if(res.code == 200) {
            this.userName = res.data.userName
-
         }
       })
     }
