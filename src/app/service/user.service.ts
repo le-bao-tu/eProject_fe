@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-const urlGetListUser  = "https://localhost:44328/api/user/getAll-user"
+const urlGetListUser  = "http://localhost:19776/api/user/getAll-user"
 @Injectable({
   providedIn: 'root'
 })
@@ -16,5 +16,4 @@ export class UserService {
       )
     )
   }
-
 }

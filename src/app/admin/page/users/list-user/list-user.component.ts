@@ -41,28 +41,28 @@ export class ListUserComponent implements OnInit {
     })
   }
 
-  onChange(sizeValue) {
-    this.pageSize = sizeValue
-  }
+    onChange(sizeValue) {
+      this.pageSize = sizeValue
+    }
 
-  // hàm xuất Excel
-  exportexcel(): void
-  {
-    /* pass here the table id */
-    let element = document.getElementById('excel-table');
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
-    /* generate workbook and add the worksheet */
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    /* save to file */
-    XLSX.writeFile(wb, this.fileName);
-  }
+    // hàm xuất Excel
+    exportexcel(): void
+    {
+      /* pass here the table id */
+      let element = document.getElementById('excel-table');
+      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+      /* generate workbook and add the worksheet */
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      /* save to file */
+      XLSX.writeFile(wb, this.fileName);
+    }
 
-  // hàm sắp xếp
-  key : string =  'id';
-  reverse: boolean = false;
-  sortby(key){
-    this.key = key;
-    this.reverse = !this.reverse;
-  }
+    // hàm sắp xếp
+    key : string =  'id';
+    reverse: boolean = false;
+    sortby(key){
+      this.key = key;
+      this.reverse = !this.reverse;
+    }
 }
