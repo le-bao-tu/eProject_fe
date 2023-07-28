@@ -16,7 +16,6 @@ import { OrganizationLegalComponent } from "./page/organization-legal/organizati
 import { QuantityDateComponent } from "./page/quantity-date/quantity-date.component";
 import { QuantityBrandnameComponent } from "./page/quantity-brandname/quantity-brandname.component";
 import { QuantityOrganizationLegalComponent } from "./page/quantity-organization-legal/quantity-organization-legal.component";
-import { AccountComponent } from "./page/account/account.component";
 import { ListUserComponent } from './page/users/list-user/list-user.component';
 import { ListCategoryComponent } from './page/categories/list-category/list-category.component';
 import { CreateCategoryComponent } from './page/categories/create-category/create-category.component';
@@ -44,9 +43,55 @@ import { DetailOrderComponent } from './page/orders/detail-order/detail-order.co
 import { CreateUserComponent } from './page/users/create-user/create-user.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ForbiddenComponent } from './page/forbidden/forbidden.component';
+import { ListAccountComponent } from './page/account/list-account/list-account.component';
+import { UpdateAccountComponent } from './page/account/update-account/update-account.component';
+import { DetailAccountComponent } from './page/account/detail-account/detail-account.component';
+import { CreateAccountComponent } from './page/account/create-account/create-account.component';
 
 @NgModule({
-  declarations: [IndexComponent, HomeComponent,HeaderComponent,FooterComponent,SidebarComponent, LoginComponent, OrganizationLogComponent, OrganizationLegalComponent, QuantityDateComponent,QuantityBrandnameComponent, QuantityOrganizationLegalComponent, AccountComponent, ListUserComponent, ListCategoryComponent, CreateCategoryComponent, UpdateCategoryComponent, DetailCategoryComponent, ListProductComponent, CreateProductComponent, UpdateProductComponent, DetailProductComponent, ListAddressComponent, UpdateAddressComponent, CreateAddressComponent, DetailAddressComponent, ListCommentComponent, CreateCommentComponent, UpdateCommentComponent, DetailCommentComponent, ListPaymentComponent, CreatePaymentComponent, UpdatePaymentComponent, DetailPaymentComponent, ListOrderComponent, UpdateDateOrderComponent, DetailOrderComponent, CreateUserComponent, ForbiddenComponent],
+  declarations: [
+    IndexComponent,
+    HomeComponent,
+    HeaderComponent,
+    FooterComponent,
+    SidebarComponent,
+    LoginComponent,
+    OrganizationLogComponent,
+    OrganizationLegalComponent,
+    QuantityDateComponent,
+    QuantityBrandnameComponent,
+    QuantityOrganizationLegalComponent,
+    ListUserComponent,
+    ListCategoryComponent,
+    CreateCategoryComponent,
+    UpdateCategoryComponent,
+    DetailCategoryComponent,
+    ListProductComponent,
+    CreateProductComponent,
+    UpdateProductComponent,
+    DetailProductComponent,
+    ListAddressComponent,
+    UpdateAddressComponent,
+    CreateAddressComponent,
+    DetailAddressComponent,
+    ListCommentComponent,
+    CreateCommentComponent,
+    UpdateCommentComponent,
+    DetailCommentComponent,
+    ListPaymentComponent,
+    CreatePaymentComponent,
+    UpdatePaymentComponent,
+    DetailPaymentComponent,
+    ListOrderComponent,
+    UpdateDateOrderComponent,
+    DetailOrderComponent,
+    CreateUserComponent,
+    ForbiddenComponent,
+    ListAccountComponent,
+    UpdateAccountComponent,
+    DetailAccountComponent,
+    CreateAccountComponent
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,

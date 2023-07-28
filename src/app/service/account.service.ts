@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { Account } from '../models/account.model';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
-const urlLogin = "https://localhost:44328/api/user/login";
-const urlgetByNameTokenLogin = "https://localhost:44328/api/user/get-by-name-token";
+const urlLogin = "http://localhost:19776/api/user/login";
+const urlgetByNameTokenLogin = "http://localhost:19776/api/user/get-by-name-token";
 const urlGetListUser = "https://localhost:44337/api/HNI/getlist-user"
 
 @Injectable({
