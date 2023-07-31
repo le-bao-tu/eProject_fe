@@ -1,1 +1,47 @@
-<p>list-payment works!</p>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page"><h4><i style="font-size:20px;padding:0 10px" class="fa">&#xf0ac;</i>Danh sách loại hình thanh toán</h4></li>
+  </ol>
+</nav>
+<div class="container-fluid">
+  <div class="form-group" style="display:flex;align-items: baseline;">
+    <span for="exampleFormControlSelect1">Hiển thị</span>
+    <select class="form-control" (change)="onChange($event.target.value)" style="width:80px;margin-left:10px">
+      <option value="20">20</option>
+      <option value="40">40</option>
+      <option value="80">80</option>
+    </select>
+    <span for="exampleFormControlSelect1" style="margin-left: 10px;">bản ghi</span>
+  </div>
+  <table class="table table-hover table-bordered" id="excel-table">
+    <thead>
+      <tr>
+        <th scope="col" (click) = "sortby('id')">PaymentId</th>
+        <th scope="col" (click) = "sortby('name')">Type</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Bank</th>
+        <th scope="col">Image</th>
+        <th scope="col">CreatedDate</th>
+        <th scope="col">UpdatedDate</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of listPayment | paginate: {itemsPerPage:pageSize,currentPage:p}">
+        <td>{{item.paymentId}}</td>
+        <td>{{item.type}}</td>
+        <td>{{item.amount}}</td>
+        <td>{{item.bank}}</td>
+        <td>{{item.image}}</td>
+        <td>{{item.createdDate}}</td>
+        <td>{{item.updatedDate}}</td>
+        <td class="td">
+          <a href="" ><i class="fa fa-pencil-square-o" style="font-size:24px"></i></a>
+          <a href="" ><i style="font-size:24px" class="fa">&#xf0c7;</i></a>
+          <a href="" ><i style="font-size:24px" class="fa">&#xf014;</i></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls style="margin-top:30px" (pageChange)="p = $event"></pagination-controls>
+</div>
