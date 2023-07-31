@@ -37,6 +37,9 @@
   color:rgb(233, 49, 49);
   font-weight: 600;
 }
-.btn {
+.td {
+  display: flex;
+}
+.fa {
   margin: 0 10px;
 }
