@@ -4,14 +4,28 @@
   </ol>
 </nav>
 <div class="container-fluid">
-  <div class="form-group" style="display:flex;align-items: baseline;">
-    <span for="exampleFormControlSelect1">Hiển thị</span>
-    <select class="form-control" (change)="onChange($event.target.value)" style="width:80px;margin-left:10px">
-      <option value="20">20</option>
-      <option value="40">40</option>
-      <option value="80">80</option>
-    </select>
-    <span for="exampleFormControlSelect1" style="margin-left: 10px;">bản ghi</span>
+  <div class="form-group" style="display: flex;">
+    <div  style="display:flex;align-items: baseline;">
+      <span for="exampleFormControlSelect1">Hiển thị</span>
+      <select class="form-control" (change)="onChange($event.target.value)" style="width:80px;margin-left:10px">
+        <option value="20">20</option>
+        <option value="40">40</option>
+        <option value="80">80</option>
+      </select>
+      <span for="exampleFormControlSelect1" style="margin-left: 10px;">bản ghi</span>
+    </div>
+    <div  style="display:flex;align-items: baseline;margin: 0 30px;">
+      <span for="exampleFormControlSelect1" style="font-weight: bold;">Sắp xếp</span>
+      <select class="form-control" (change)="onChange($event.target.value)" style="width:180px;margin-left:10px">
+        <option value="20">Ngày mới nhất</option>
+        <option value="40">Sắp xếp theo ký tự từ A-Z</option>
+        <option value="80">Sắp xếp theo ký tự từ Z-A</option>
+      </select>
+    </div>
+    <div  style="display:flex;align-items: baseline;">
+      <span for="exampleFormControlSelect1" style="margin:0 10px;font-weight: bold;">Search</span>
+      <input type="text" class="form-control" id="myInput"  aria-describedby="emailHelp" placeholder="Enter keyword . . . ">
+    </div>
   </div>
   <table class="table table-hover table-bordered" id="excel-table">
     <thead>
@@ -25,15 +39,17 @@
         <th scope="col"></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="myTable">
       <tr *ngFor="let item of listCategory | paginate: {itemsPerPage:pageSize,currentPage:p}">
         <td>{{item.categoryId}}</td>
         <td>{{item.categoryName}}</td>
-
-        <td>{{item.status == true ? 'Kích hoạt' : 'chưa kích hoạt'}}</td>
-        <td>{{item.image}}</td>
-        <td>{{item.createdDate}}</td>
-        <td>{{item.updatedDate}}</td>
+        <td>
+          <small _ngcontent-aye-c2="" class="label bg-green">{{item.status == true?"kích hoạt":""}}</small>
+          <small _ngcontent-aye-c2="" class="label bg-red">{{item.status == false?"chưa kích hoạt":""}}</small>
+         </td>
+        <td><img src="http://localhost:19776/api/Category/get-category-image?image={{item.image}}" alt=""></td>
+        <td>{{item.createdDate | date:'dd-MM-yyyy hh:ss'}}</td>
+        <td>{{item.updatedDate | date:'dd-MM-yyyy hh:ss'}}</td>
         <td class="td">
           <a href="" ><i class="fa fa-pencil-square-o" style="font-size:24px"></i></a>
           <a href="" ><i style="font-size:24px" class="fa">&#xf0c7;</i></a>
@@ -44,3 +60,5 @@
   </table>
   <pagination-controls style="margin-top:30px" (pageChange)="p = $event"></pagination-controls>
 </div>
+
+

@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { AdminModule } from './admin/admin.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
-import { FormsModule, } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { InterceptorService } from './service/interceptor.service';
 import { ErorInterceptorService } from './service/eror-interceptor.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -31,7 +31,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     RouterModule,
     NgxPaginationModule,
     Ng2OrderModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {

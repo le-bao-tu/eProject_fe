@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+const urlLogin = "http://localhost:19776/api/user/login";
 const urlGetListUser  = "http://localhost:19776/api/user/getAll-user"
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,10 @@ const urlGetListUser  = "http://localhost:19776/api/user/getAll-user"
 export class UserService {
 
   constructor(private http: HttpClient) { }
+
+  LoginUser(data:Object):Observable<Object> {
+    return this.http.post<Object>(urlLogin,data)
+  }
 
   GetListUser():Observable<Object[]> {
     return this.http.get<Object[]>(urlGetListUser).pipe(

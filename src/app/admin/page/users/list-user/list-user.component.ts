@@ -26,17 +26,19 @@ export class ListUserComponent implements OnInit {
   }
 
   GetListAccount() {
-    this.userService.GetListUser().subscribe((res:any) => {
-      console.log(res);
-      if(res.code == 200) {
-        this.listUsers = res.data
-        this.last = this.listUsers[this.listUsers.length -1]
-        this.notification.showSuccess(res.message,"Success");
+   this.userService.GetListUser().subscribe((res: any) => {
+      console.log("klsjdclsdn"+res.status);
+      if (res.code == 200) {
+        this.listUsers = res.data;
+        this.last = this.listUsers[this.listUsers.length - 1];
+        this.notification.showSuccess(res.message, "Success");
       }
-
-      if(res.code == 403) {
+      // if (statusCode == 403) {
+      //   this.router.navigate(['/']);
+      // }
+      if(res.code != 200) {
+        this.notification.showError(res.message, "Error");
         this.listUsers = [];
-        this.router.navigate(['/page/forbidden']);
       }
     })
   }

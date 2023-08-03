@@ -3,9 +3,8 @@ import { Observable } from 'rxjs';
 import { Account } from '../models/account.model';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
-const urlLogin = "http://localhost:19776/api/user/login";
 const urlgetByNameTokenLogin = "http://localhost:19776/api/user/get-by-name-token";
-const urlGetListUser = "https://localhost:44337/api/HNI/getlist-user"
+const urlGetListAccount = "http://localhost:19776/api/Account/getall-account"
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +13,8 @@ export class AccountService {
 
   constructor(private http: HttpClient) { }
 
-  LoginAccount(data:Object):Observable<Object> {
-    return this.http.post<Object>(urlLogin,data)
-  }
-
-  GetListAccount(data:Object):Observable<Object> {
-    return this.http.post<Object>(urlGetListUser,data)
+  GetListAccount():Observable<Object> {
+    return this.http.get<Object>(urlGetListAccount)
   }
 
   GetByNameToken(email:string):Observable<Object> {

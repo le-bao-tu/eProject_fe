@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 const urlGetListCategory = "http://localhost:19776/api/Category/getall-category";
+const urlCreateCategory = "http://localhost:19776/api/Category/create-category"
 
 @Injectable({
   providedIn: 'root'
@@ -16,4 +17,9 @@ export class CategoryService {
       tap(() => console.log("OK"))
     )
   }
+
+  CreateCategory(data:Object):Observable<Object> {
+    return this.http.post<Object>(urlCreateCategory,data);
+  }
+
 }
