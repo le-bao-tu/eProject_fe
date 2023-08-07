@@ -23,9 +23,14 @@
 
     <div style="margin-top:10px" class="modal-body-content">
       <span style="font-weight: bold;">Image</span>
-      <input type="file" class="form-control" (change)="onFileChange($event)" formControlName="fileImage" style="margin:10px 0;border-radius: 3px;" >
+      <input type="file" class="form-control" (change)="onFileChange($event)" formControlName="image" style="margin:10px 0;border-radius: 3px;" >
+      <img *ngIf="selectedImage" [src]="selectedImage" alt="Selected Image">
     </div>
-
+    <div *ngIf="f.image.dirty || f.image.touched">
+      <div *ngIf="f.image.errors">
+        <span class="err" *ngIf="f.image.errors.required">Bạn chưa nhập gì </span>
+      </div>
+    </div>
     <div class="modal-footer">
       <button type="button"  class="btn btn-warning" data-dismiss="modal">Close</button>
       <button type="submit"  class="btn btn-primary" data-dismiss="modal">Thêm mới</button>

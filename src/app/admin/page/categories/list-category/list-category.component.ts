@@ -17,6 +17,55 @@ export class ListCategoryComponent implements OnInit {
   pageSize:number = 20;
   message:any;
   fileName= 'ExcelSheet.xlsx';
+  image: any;
+
+  selectedFile: File;
+  selectedImage: string | ArrayBuffer | null = null;
+  imageold:string;
+  imageBase64: string | null = null;
+  eventOccurred: boolean = true;
+
+
+  formDetail = this.fb.group({
+    "image" : "",
+    "categoryId" : "",
+    "categoryName" :"",
+    "status" :"",
+    "createdDate":"",
+    "updatedDate" : "",
+  });
+
+  formUpdate = this.fb.group({
+    "categoryId" : "",
+    "categoryName" :"",
+    "status" :"",
+    "image" : "",
+    "createdDate":"",
+    "updatedDate" : "",
+
+  })
+
+  onFileChange(event: any) {
+    this.selectedFile = event.target.files[0];
+    this.eventOccurred = false;
+    if (this.selectedFile) {
+      this.readFile(this.selectedFile);
+      const reader = new FileReader();
+        reader.onloadend = () => {
+          this.imageBase64 = reader.result.toString().split(',')[1] || '';
+        };
+        reader.readAsDataURL(this.selectedFile);
+    }
+  }
+
+  //  hiển thị ảnh khi chnj ảnh
+private readFile(file: File): void {
+  const reader = new FileReader();
+  reader.onload = () => {
+    this.selectedImage = reader.result;
+  };
+  reader.readAsDataURL(file);
+}
 
   ngOnInit() {
     this.GetAllCategory();
@@ -33,6 +82,70 @@ export class ListCategoryComponent implements OnInit {
         this.router.navigate(['/page/forbidden']);
       }else{
         this.listCategory = [];
+      }
+    })
+  }
+
+  ShowCateDetail(cateid:any) {
+    this.categoryService.GetCategoryById(cateid).subscribe((res:any) =>{
+      console.log(res)
+      this.formDetail = this.fb.group({
+        "categoryId":[`${res.data.categoryId}`],
+        "categoryName" : [`${res.data.categoryName}`],
+        "status" : [`${res.data.status == true ? 'kích hoạt' : 'chưa kích hoạt'}`],
+        "image" :  [`${res.data.image}`],
+        "createdDate" : [`${res.data.createdDate}`],
+        "updatedDate" : [`${res.data.updatedDate}`],
+
+      })
+      this.image = this.formDetail.controls.image.value
+    })
+  }
+
+  ShowFormUpdateDetail(cateId:any) {
+    this.categoryService.GetCategoryById(cateId).subscribe((res:any) =>{
+      console.log(res)
+      this.formUpdate = this.fb.group({
+        "categoryId":[`${res.data.categoryId}`],
+        "categoryName" : [`${res.data.categoryName}`],
+        "status" : [`${res.data.status}`],
+        "imageold" :  [`${res.data.image}`],
+        "createdDate" : [`${res.data.createdDate}`],
+        "updatedDate" : [`${res.data.updatedDate}`],
+      })
+      this.imageold = this.formUpdate.controls.imageold.value
+    })
+  }
+
+  onSubmitFromUpdate(event) {
+    for (const i in this.formUpdate.controls) {
+      this.formUpdate.controls[i].markAsDirty();
+      this.formUpdate.controls[i].updateValueAndValidity();
+    }
+
+    if (!this.formUpdate.valid) {
+      event.stopPropagation()
+      return;
+    }
+    var checkStatus = this.formUpdate.controls.status.value;
+    if(checkStatus == "true") {
+      checkStatus = true;
+    }else{
+      checkStatus = false;
+    }
+    let model = {
+      ...this.formUpdate.value,
+      status : checkStatus,
+      updatedDate : new Date(),
+      image : this.imageBase64
+    }
+    this.categoryService.UpdateCategory(model).subscribe((res:any)=>{
+      console.log(res);
+      if(res.code == 200) {
+        this.GetAllCategory()
+        this.notification.showSuccess(res.message,"Success")
+      }else{
+        this.notification.showError(res.message,"Error")
       }
     })
   }

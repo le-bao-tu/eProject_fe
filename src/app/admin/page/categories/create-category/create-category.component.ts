@@ -14,17 +14,37 @@ export class CreateCategoryComponent implements OnInit {
   constructor(private fb:FormBuilder,private categoryService:CategoryService,private router:Router,private notification:NotificationService) { }
 
   selectedFile: File;
+  selectedImage: string | ArrayBuffer | null = null;
+  imageBase64: string | null = null;
 
   // check dữ liệu liệu form
   infoForm = this.fb.group({
     "categoryName":["",[Validators.required,Validators.maxLength(20),Validators.pattern('^[a-zA-Z0-9]+$')]],
-    "fileImage":[],
+    "image":[[Validators.required]],
     "status":true,
 })
 
 onFileChange(event: any) {
   this.selectedFile = event.target.files[0];
+  if (this.selectedFile) {
+    this.readFile(this.selectedFile);
+    const reader = new FileReader();
+      reader.onloadend = () => {
+        this.imageBase64 = reader.result.toString().split(',')[1] || '';
+      };
+      reader.readAsDataURL(this.selectedFile);
+  }
 }
+
+//  hiển thị ảnh khi chnj ảnh
+private readFile(file: File): void {
+  const reader = new FileReader();
+  reader.onload = () => {
+    this.selectedImage = reader.result;
+  };
+  reader.readAsDataURL(file);
+}
+
 
 ngOnInit():void {
 }
@@ -39,9 +59,10 @@ onSubmit() {
       this.infoForm.controls[i].markAsDirty();
       this.infoForm.controls[i].updateValueAndValidity();
     }
+
     let model = {
-      ...this.infoForm.value,
-      fileImage : this.selectedFile
+      ... this.infoForm.value,
+      image : this.imageBase64
     }
     this.categoryService.CreateCategory(model).subscribe((res:any)=>{
       console.log(res);
