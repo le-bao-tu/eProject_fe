@@ -51,9 +51,9 @@
         <td>{{item.createdDate | date:'dd-MM-yyyy hh:ss'}}</td>
         <td>{{item.updatedDate | date:'dd-MM-yyyy hh:ss'}}</td>
         <td class="td">
-          <a href=""  data-toggle="modal" data-target="#exampleModal" (click)="ShowCateDetail(item.categoryId)" ><i class="fa fa-pencil-square-o" style="font-size:24px"></i></a>
-          <a href="" data-toggle="modal" data-target="#exampleModal2" (click)="ShowFormUpdateDetail(item.categoryId)"><i style="font-size:24px" class="fa">&#xf0c7;</i></a>
-          <a href="" ><i style="font-size:24px" class="fa">&#xf014;</i></a>
+          <a href=""  data-toggle="modal" data-target="#detailModal" (click)="ShowCateDetail(item.categoryId)" ><i class="fa fa-pencil-square-o" style="font-size:24px"></i></a>
+          <a href="" data-toggle="modal" data-target="#updateModal" (click)="ShowFormUpdateDetail(item.categoryId)"><i style="font-size:24px" class="fa">&#xf0c7;</i></a>
+          <a (click)="DeleteCategory(item.categoryId)"><i style="font-size:24px" class="fa">&#xf014;</i></a>
         </td>
       </tr>
     </tbody>
@@ -61,8 +61,8 @@
   <pagination-controls style="margin-top:30px" (pageChange)="p = $event"></pagination-controls>
 </div>
 
- <!-- FROM DETAIL  -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <!-- FORM DETAIL  -->
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content" style="border-radius: 5px;">
       <div class="modal-header">
@@ -105,8 +105,8 @@
   </div>
 
 
-  <!-- FROM UPDATE  -->
-  <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- FORM UPDATE  -->
+  <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content" style="border-radius: 5px;">
         <div class="modal-header">
