@@ -17,6 +17,7 @@ import { CreatePaymentComponent } from './page/payment/create-payment/create-pay
 import { UpdatePaymentComponent } from './page/payment/update-payment/update-payment.component';
 import { DetailPaymentComponent } from './page/payment/detail-payment/detail-payment.component';
 import { ListAddressComponent } from './page/AddressAccount/list-address/list-address.component';
+import { CreateAddressComponent } from './page/AddressAccount/create-address/create-address.component';
 import { ListCommentComponent } from './page/comment/list-comment/list-comment.component';
 import { CreateCommentComponent } from './page/comment/create-comment/create-comment.component';
 import { UpdateCommentComponent } from './page/comment/update-comment/update-comment.component';
@@ -29,6 +30,7 @@ import { ListAccountComponent } from './page/account/list-account/list-account.c
 import { CreateAccountComponent } from './page/account/create-account/create-account.component';
 import { UpdateAccountComponent } from './page/account/update-account/update-account.component';
 import { DetailAccountComponent } from './page/account/detail-account/detail-account.component';
+import { UpdateAddressComponent } from './page/AddressAccount/update-address/update-address.component';
 
 const routes: Routes = [
   {path:'',component:IndexComponent,children:[
@@ -48,6 +50,8 @@ const routes: Routes = [
     {path:'payment/update-payment',component:UpdatePaymentComponent},
     {path:'payment/detail-payment',component:DetailPaymentComponent},
     {path:'address/list-address',component:ListAddressComponent},
+    {path:'address/create-address',component:CreateAddressComponent},
+    {path:'address/update-address',component:UpdateAddressComponent},
     {path:'comment/list-comment',component:ListCommentComponent},
     {path:'comment/create-comment',component:CreateCommentComponent},
     {path:'comment/update-comment',component:UpdateCommentComponent},

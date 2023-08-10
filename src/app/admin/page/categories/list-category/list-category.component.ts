@@ -17,8 +17,8 @@ export class ListCategoryComponent implements OnInit {
   pageSize:number = 20;
   message:any;
   fileName= 'ExcelSheet.xlsx';
+  
   image: any;
-
   selectedFile: File;
   selectedImage: string | ArrayBuffer | null = null;
   imageold:string;
@@ -115,6 +115,23 @@ private readFile(file: File): void {
       })
       this.imageold = this.formUpdate.controls.imageold.value
     })
+  }
+
+  DeleteCategory(id){
+    if(confirm("Are you sure?")){
+      this.categoryService.DeleteCategory(id).subscribe((res:any) => {
+        console.log(res)
+        if(res.code == 200) {
+          this.notification.showSuccess(res.message,"Success");
+          this.GetAllCategory()
+        }else if(res.code == 403) {
+          this.listCategory = [];
+          this.router.navigate(['/page/forbidden']);
+        }else{
+          this.listCategory = [];
+        }
+      })
+    }
   }
 
   onSubmitFromUpdate(event) {

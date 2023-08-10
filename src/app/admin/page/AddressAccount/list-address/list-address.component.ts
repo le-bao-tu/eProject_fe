@@ -12,19 +12,95 @@ import * as XLSX from 'xlsx';
 })
 export class ListAddressComponent implements OnInit {
 
-  constructor(private fb:FormBuilder,private notification:NotificationService,private router:Router, private accountService :  AddressAccountService) { }
+  constructor(private fb:FormBuilder,private notification:NotificationService,private router:Router, private addressAccountService :  AddressAccountService) { }
   listAddress = [];
   p:number = 1;
   pageSize = 20;
   message:any;
   fileName = 'ExcelSheet.xlsx';
 
+  image: any;
+  selectedFile: File;
+  selectedImage: string | ArrayBuffer | null = null;
+  imageold:string;
+  imageBase64: string | null = null;
+  eventOccurred: boolean = true;
+
+  formDetail = this.fb.group({
+    "addressId":"",
+    "address":"",
+    "accountId":"",
+    "createdDate":"",
+    "updatedDate" : "",
+  });
+
+  formUpdate = this.fb.group({
+    "addressId":"",
+    "address":"",
+    "accountId":"",
+    "createdDate":"",
+    "updatedDate" : "",
+  })
+
   ngOnInit() {
     this.GetAllAddressAccount();
   }
 
+  ShowAddressDetail(id:any) {
+    this.addressAccountService.GetAddressAccountById(id).subscribe((res:any) =>{
+      console.log(res)
+      this.formDetail = this.fb.group({
+        "addressId" : [`${res.data.addressId}`],
+        "address" : [`${res.data.address}`],
+        "accountId" : [`${res.data.account.userName}`],
+        "createdDate" : [`${res.data.createdDate}`],
+        "updatedDate" : [`${res.data.updatedDate}`],
+      })
+      console.log("Form" + this.formDetail);
+    })
+  }
+
+  ShowFormUpdateDetail(id:any) {
+    this.addressAccountService.GetAddressAccountById(id).subscribe((res:any) =>{
+      console.log(res)
+      this.formUpdate = this.fb.group({
+        "addressId" : [`${res.data.addressId}`],
+        "address" : [`${res.data.address}`],
+        "accountId" : [`${res.data.accountId}`],
+        "createdDate" : [`${res.data.createdDate}`],
+        "updatedDate" : [`${res.data.updatedDate}`],
+      })
+    })
+  }
+
+  onSubmitFromUpdate(event) {
+    for (const i in this.formUpdate.controls) {
+      this.formUpdate.controls[i].markAsDirty();
+      this.formUpdate.controls[i].updateValueAndValidity();
+    }
+
+    if (!this.formUpdate.valid) {
+      event.stopPropagation()
+      return;
+    }
+        
+    let model = {
+      ...this.formUpdate.value,
+      updatedDate : new Date()
+    }
+    this.addressAccountService.UpdateAddressAccount(model).subscribe((res:any)=>{
+      console.log(res);
+      if(res.code == 200) {
+        this.GetAllAddressAccount()
+        this.notification.showSuccess(res.message,"Success")
+      }else{
+        this.notification.showError(res.message,"Error")
+      }
+    })
+  }
+
   GetAllAddressAccount() {
-    this.accountService.GetListAddressAccount().subscribe((res:any) => {
+    this.addressAccountService.GetListAddressAccount().subscribe((res:any) => {
       console.log(res)
       if(res.code == 200) {
         this.listAddress = res.data;
@@ -38,6 +114,22 @@ export class ListAddressComponent implements OnInit {
     })
   }
 
+  DeleteAddressAccount(id){
+    if(confirm("Are you sure?")){
+      this.addressAccountService.DeleteAddressAccount(id).subscribe((res:any) => {
+        console.log(res)
+        if(res.code == 200) {
+          this.notification.showSuccess(res.message,"Success");
+          this.GetAllAddressAccount()
+        }else if(res.code == 403) {
+          this.listAddress = [];
+          this.router.navigate(['/page/forbidden']);
+        }else{
+          this.listAddress = [];
+        }
+      })
+    }
+  }
 
   onChange(sizeValue) {
     this.pageSize = sizeValue

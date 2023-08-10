@@ -15,6 +15,7 @@ export class ListOrderComponent implements OnInit {
   constructor(private fb:FormBuilder,private notification:NotificationService,private router:Router,private orderService:OrderService) { }
 
   listOrder = [];
+  listOrderDetail = [];
   p:number = 1;
   pageSize:number = 20;
   message:any;
@@ -22,6 +23,72 @@ export class ListOrderComponent implements OnInit {
 
   onChange(sizeValue) {
     this.pageSize = sizeValue
+  }
+
+  formDetail = this.fb.group({
+    "orderId" :"",
+    "email":"",
+    "phone":"",
+    "address":"",
+    "totalPrice":"",
+    "state":"",
+    "cancellationReason":"",
+    "feedback" : "",
+    "accountId" : "",
+    "createdDate":"",
+    "updatedDate" : "",
+  });
+
+  formUpdate = this.fb.group({
+    "orderId" :"",
+    "email":"",
+    "phone":"",
+    "address":"",
+    "totalPrice":"",
+    "state":"",
+    "cancellationReason":"",
+    "feedback" : "",
+    "accountId" : "",
+    "createdDate":"",
+    "updatedDate" : "",
+  })
+
+  ShowOrderDetail(id:any) {
+    this.orderService.GetOrderById(id).subscribe((res:any) =>{
+      console.log(res)
+      this.formDetail = this.fb.group({
+        "orderId" : [`${res.data.orderId}`],
+        "email": [`${res.data.email}`],
+        "phone": [`${res.data.phone}`],
+        "address": [`${res.data.address}`],
+        "totalPrice": [`${res.data.totalPrice}`],
+        "state": [`${res.data.state}`],
+        "cancellationReason": [`${res.data.cancellationReason}`],
+        "feedback" : [`${res.data.feedback}`],
+        "accountId" : [`${res.data.account.userName}`],
+        "createdDate" : [`${res.data.createdDate}`],
+        "updatedDate" : [`${res.data.updatedDate}`],
+      })
+    })
+  }
+
+  ShowFormUpdateDetail(id:any) {
+    this.orderService.GetOrderById(id).subscribe((res:any) =>{
+      console.log(res)
+      this.formUpdate = this.fb.group({
+        "orderId" : [`${res.data.orderId}`],
+        "email": [`${res.data.email}`],
+        "phone": [`${res.data.phone}`],
+        "address": [`${res.data.address}`],
+        "totalPrice": [`${res.data.totalPrice}`],
+        "state": [`${res.data.state}`],
+        "cancellationReason": [`${res.data.cancellationReason}`],
+        "feedback" : [`${res.data.feedback}`],
+        "accountId" : [`${res.data.account.userName}`],
+        "createdDate" : [`${res.data.createdDate}`],
+        "updatedDate" : [`${res.data.updatedDate}`],
+      })
+    })
   }
 
 
@@ -44,6 +111,62 @@ export class ListOrderComponent implements OnInit {
     })
   }
 
+  GetOrderDetailByOrderId(id) {
+    this.orderService.GetOrderDetail(id).subscribe((res:any) => {
+      console.log(res)
+      if(res.code == 200) {
+        this.listOrderDetail = res.data;
+      }else if(res.code == 403) {
+        this.listOrderDetail = [];
+        this.router.navigate(['/page/forbidden']);
+      }else{
+        this.listOrderDetail = [];
+      }
+    })
+  }
+
+  onSubmitFromUpdate(event) {
+    for (const i in this.formUpdate.controls) {
+      this.formUpdate.controls[i].markAsDirty();
+      this.formUpdate.controls[i].updateValueAndValidity();
+    }
+
+    if (!this.formUpdate.valid) {
+      event.stopPropagation()
+      return;
+    }
+        
+    let model = {
+      ...this.formUpdate.value,
+      updatedDate : new Date()
+    }
+    this.orderService.UpdateOrder(model).subscribe((res:any)=>{
+      console.log(res);
+      if(res.code == 200) {
+        this.GetAllOrder();
+        this.notification.showSuccess(res.message,"Success")
+      }else{
+        this.notification.showError(res.message,"Error")
+      }
+    })
+  }
+  
+  DeleteOrder(id){
+    if(confirm("Are you sure?")){
+      this.orderService.DeleteOrder(id).subscribe((res:any) => {
+        console.log(res)
+        if(res.code == 200) {
+          this.notification.showSuccess(res.message,"Success");
+          this.GetAllOrder()
+        }else if(res.code == 403) {
+          this.listOrder = [];
+          this.router.navigate(['/page/forbidden']);
+        }else{
+          this.listOrder = [];
+        }
+      })
+    }
+  }
 
   // hàm xuất Excel
   exportexcel(): void
