@@ -8,18 +8,21 @@
     <div  style="display:flex;align-items: baseline;">
       <span for="exampleFormControlSelect1">Hiển thị</span>
       <select class="form-control" (change)="onChange($event.target.value)" style="width:80px;margin-left:10px">
+        <option value="10">10</option>
         <option value="20">20</option>
-        <option value="40">40</option>
-        <option value="80">80</option>
+        <option value="20">30</option>
       </select>
       <span for="exampleFormControlSelect1" style="margin-left: 10px;">bản ghi</span>
     </div>
     <div  style="display:flex;align-items: baseline;margin: 0 30px;">
       <span for="exampleFormControlSelect1" style="font-weight: bold;">Sắp xếp</span>
-      <select class="form-control" (change)="onChange($event.target.value)" style="width:180px;margin-left:10px">
-        <option value="20">Ngày mới nhất</option>
-        <option value="40">Sắp xếp theo ký tự từ A-Z</option>
-        <option value="80">Sắp xếp theo ký tự từ Z-A</option>
+      <select class="form-control" (change)="onChanges($event.target.value)" style="width:180px;margin-left:10px">
+        <option value="">----Chọn ----</option>
+        <option value="sortid_asc">Sắp xếp theo id tăng dần</option>
+        <option value="sortid_desc">Sắp xếp theo id giảm dần</option>
+        <option value="sortname_asc">Sắp xếp theo ký tự từ Z-A</option>
+        <option value="sortname_desc">Sắp xếp theo ký tự từ Z-A</option>
+
       </select>
     </div>
     <div  style="display:flex;align-items: baseline;">
@@ -53,7 +56,7 @@
         <td class="td">
           <a href=""  data-toggle="modal" data-target="#detailModal" (click)="ShowCateDetail(item.categoryId)" ><i class="fa fa-pencil-square-o" style="font-size:24px"></i></a>
           <a href="" data-toggle="modal" data-target="#updateModal" (click)="ShowFormUpdateDetail(item.categoryId)"><i style="font-size:24px" class="fa">&#xf0c7;</i></a>
-          <a (click)="DeleteCategory(item.categoryId)"><i style="font-size:24px" class="fa">&#xf014;</i></a>
+          <a href="" (click)="DeleteCategory(item.categoryId)"><i style="font-size:24px" class="fa">&#xf014;</i></a>
         </td>
       </tr>
     </tbody>

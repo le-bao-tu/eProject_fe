@@ -7,6 +7,7 @@ const urlCreateProduct = "http://localhost:19776/api/Product/create-product";
 const urlGetProductById = "http://localhost:19776/api/Product/get-product-by-id";
 const urlUpdateProduct = "http://localhost:19776/api/Product/update-product";
 const urlDeleteProduct = "http://localhost:19776/api/Product/delete-product";
+const urlSortByProduct = "http://localhost:19776/api/Product/sortby-product";
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,9 @@ export class ProductService {
 
   DeleteProduct(id):Observable<Object[]> {
     return this.http.get<Object[]>(urlDeleteProduct + `?id=${id}`);
+  }
+
+  SortByProduct(sort:string):Observable<Object[]> {
+    return this.http.get<Object[]>(urlSortByProduct+`?sort=${sort}`);
   }
 }

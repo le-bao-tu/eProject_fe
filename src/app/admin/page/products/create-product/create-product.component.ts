@@ -17,6 +17,8 @@ export class CreateProductComponent implements OnInit {
   selectedFile: File;
   selectedImage: string | ArrayBuffer | null = null;
   imageBase64: string | null = null;
+  editorContent = '';
+
 
   ngOnInit() {
     this.GetAllCategory();
@@ -24,13 +26,13 @@ export class CreateProductComponent implements OnInit {
 
   infoForm = this.fb.group({
     "productName":["",[Validators.required,Validators.maxLength(50),Validators.pattern('^[a-zA-Z0-9]+$')]],
-    "quantity":[[Validators.required]],
-    "price":[[Validators.required]],
-    "salePrice":[[Validators.required]],
+    "quantity":["",[Validators.required]],
+    "price":["",[Validators.required]],
+    "salePrice":["",[Validators.required]],
     "address":["", [Validators.required]],
     "status":true,
-    "description":[""],
-    "image":[[Validators.required]],
+    "description":["",[Validators.required]],
+    "image":["",[Validators.required]],
     "categoryId":["", [Validators.required]]
 })
 
@@ -64,12 +66,15 @@ GetAllCategory() {
     console.log(res);
     if(res.code == 200) {
       this.listCategory = res.data;
-      this.notification.showSuccess(res.message,"Success");
     }else if(res.code == 403) {
       this.listCategory = [];
       this.router.navigate(['/page/forbidden']);
     }
   })
+}
+
+onEditorChange(eventData: any) {
+  this.editorContent = eventData;
 }
 
 onSubmit(){
@@ -79,7 +84,8 @@ onSubmit(){
   }
   let model = {
     ...this.infoForm.value,
-    image : this.imageBase64
+    image : this.imageBase64,
+    description: this.editorContent
   }
   this.productService.CreateProduct(model).subscribe((res:any)=>{
     console.log(res);
@@ -91,6 +97,8 @@ onSubmit(){
     }
   })
 }
+
+
 
 
 }
