@@ -14,10 +14,10 @@ export class ListCategoryComponent implements OnInit {
   constructor(private fb:FormBuilder,private notification:NotificationService,private router:Router,private categoryService : CategoryService) { }
   listCategory = [];
   p:number = 1;
-  pageSize:number = 20;
+  pageSize:number = 10;
   message:any;
   fileName= 'ExcelSheet.xlsx';
-  
+
   image: any;
   selectedFile: File;
   selectedImage: string | ArrayBuffer | null = null;
@@ -77,7 +77,7 @@ private readFile(file: File): void {
       if(res.code == 200) {
         this.listCategory = res.data;
         this.notification.showSuccess(res.message,"Success");
-      }else if(res.code == 403) {
+      }else if(res.status == 403) {
         this.listCategory = [];
         this.router.navigate(['/page/forbidden']);
       }else{
@@ -167,10 +167,21 @@ private readFile(file: File): void {
     })
   }
 
+
   onChange(sizeValue) {
     this.pageSize = sizeValue
   }
 
+  onChanges(sortValue) {
+    this.categoryService.SortByCategory(sortValue).subscribe((res:any)=>{
+      console.log(res);
+      if(res.code == 200) {
+        this.listCategory = res.data;
+      }else{
+        this.notification.showError(res.message,"Error")
+      }
+    });
+  }
     // hàm xuất Excel
     exportexcel(): void
     {

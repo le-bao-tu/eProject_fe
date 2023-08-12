@@ -27,6 +27,7 @@ export class ListProductComponent implements OnInit {
   imageold:string;
   imageBase64: string | null = null;
   eventOccurred: boolean = true;
+  editorContent = '';
 
   formDetail = this.fb.group({
     "image" : "",
@@ -35,9 +36,9 @@ export class ListProductComponent implements OnInit {
     "quantity": "",
     "price" : "",
     "salePrice" : "",
-    "description" : "",
     "status" :"",
     "categoryId":"",
+    "description" : "",
     "createdDate":"",
     "updatedDate" : "",
   });
@@ -45,16 +46,18 @@ export class ListProductComponent implements OnInit {
   formUpdate = this.fb.group({
     "image" : "",
     "productId" : "",
+    "categoryName":"",
     "productName" :"",
     "quantity": "",
     "price" : "",
     "salePrice" : "",
-    "description" : "",
+
     "status" :"",
     "categoryId":"",
-    "categoryName":"",
-    "createdDate":"",
-    "updatedDate" : "",
+    "createdDate":'',
+    "updatedDate" : '',
+    "description" : "",
+
   })
 
   ngOnInit() {
@@ -72,7 +75,7 @@ export class ListProductComponent implements OnInit {
       }
     })
   }
-  
+
   onFileChange(event: any) {
     this.selectedFile = event.target.files[0];
     this.eventOccurred = false;
@@ -114,18 +117,17 @@ private readFile(file: File): void {
     this.productService.GetProductById(proId).subscribe((res:any) =>{
       console.log(res)
       this.formDetail = this.fb.group({
-        "categoryId":[`${res.data.category.categoryName}`],
-        "status" : [`${res.data.status == true ? 'kích hoạt' : 'chưa kích hoạt'}`],
         "image" :  [`${res.data.image}`],
-        "createdDate" : [`${res.data.createdDate}`],
-        "updatedDate" : [`${res.data.updatedDate}`],
         "productId" : [`${res.data.productId}`],
         "productName" :[`${res.data.productName}`],
-        "quantity": [`${res.data.quantity}`],
         "price" : [`${res.data.price}`],
         "salePrice" : [`${res.data.salePrice}`],
+        "quantity": [`${res.data.quantity}`],
+        "status" : [`${res.data.status == true ? 'kích hoạt' : 'chưa kích hoạt'}`],
+        "categoryId":[`${res.data.category.categoryName}`],
         "description" : [`${res.data.description}`],
-
+        "createdDate" : [`${res.data.createdDate}`],
+        "updatedDate" : [`${res.data.updatedDate}`],
       })
       this.image = this.formDetail.controls.image.value
     })
@@ -139,13 +141,13 @@ private readFile(file: File): void {
         "categoryId":[`${res.data.categoryId}`],
         "status" : [`${res.data.status}`],
         "image" :  [`${res.data.image}`],
-        "createdDate" : [`${res.data.createdDate}`],
-        "updatedDate" : [`${res.data.updatedDate}`],
         "productId" : [`${res.data.productId}`],
         "productName" :[`${res.data.productName}`],
         "quantity": [`${res.data.quantity}`],
         "price" : [`${res.data.price}`],
         "salePrice" : [`${res.data.salePrice}`],
+        "createdDate" : [`${res.data.createdDate}`],
+        "updatedDate" : [`${res.data.updatedDate}`],
         "description" : [`${res.data.description}`],
       })
       this.imageold = this.formUpdate.controls.image.value
@@ -204,6 +206,21 @@ private readFile(file: File): void {
 
   onChange(sizeValue) {
     this.pageSize = sizeValue
+  }
+
+  onChanges(sortValue) {
+    this.productService.SortByProduct(sortValue).subscribe((res:any)=>{
+      console.log(res);
+      if(res.code == 200) {
+        this.listProduct = res.data;
+      }else{
+        this.notification.showError(res.message,"Error")
+      }
+    });
+  }
+
+  onEditorChange(eventData: any) {
+    this.editorContent = eventData;
   }
 
   // hàm xuất Excel

@@ -47,6 +47,7 @@ import { ListAccountComponent } from './page/account/list-account/list-account.c
 import { UpdateAccountComponent } from './page/account/update-account/update-account.component';
 import { DetailAccountComponent } from './page/account/detail-account/detail-account.component';
 import { CreateAccountComponent } from './page/account/create-account/create-account.component';
+import { CKEditorModule } from 'ngx-ckeditor';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { CreateAccountComponent } from './page/account/create-account/create-acc
     Ng2OrderModule,
     NgxPaginationModule,
     Ng2SearchPipeModule,
+    CKEditorModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
