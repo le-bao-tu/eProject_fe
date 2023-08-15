@@ -37,7 +37,8 @@ export class ListAddressComponent implements OnInit {
   formUpdate = this.fb.group({
     "addressId":"",
     "address":"",
-    "accountId":"",
+    "accountName":"",
+    "accountId" :"",
     "createdDate":"",
     "updatedDate" : "",
   })
@@ -66,6 +67,7 @@ export class ListAddressComponent implements OnInit {
       this.formUpdate = this.fb.group({
         "addressId" : [`${res.data.addressId}`],
         "address" : [`${res.data.address}`],
+        "accountName" : [`${res.data.account.userName}`],
         "accountId" : [`${res.data.accountId}`],
         "createdDate" : [`${res.data.createdDate}`],
         "updatedDate" : [`${res.data.updatedDate}`],
@@ -83,7 +85,7 @@ export class ListAddressComponent implements OnInit {
       event.stopPropagation()
       return;
     }
-        
+
     let model = {
       ...this.formUpdate.value,
       updatedDate : new Date()
@@ -135,6 +137,16 @@ export class ListAddressComponent implements OnInit {
     this.pageSize = sizeValue
   }
 
+  onChanges(sortValue) {
+    this.addressAccountService.SortByAddress(sortValue).subscribe((res:any)=>{
+      console.log(res);
+      if(res.code == 200) {
+        this.listAddress = res.data;
+      }else{
+        this.notification.showError(res.message,"Error")
+      }
+    });
+  }
   // hàm xuất Excel
   exportexcel(): void
   {

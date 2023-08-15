@@ -22,6 +22,7 @@ export class ListCommentComponent implements OnInit {
   pageSize:number = 20;
   message:any;
   fileName= 'ExcelSheet.xlsx';
+  image:any;
 
   formDetail = this.fb.group({
     "commentId":"",
@@ -35,6 +36,7 @@ export class ListCommentComponent implements OnInit {
   formUpdate = this.fb.group({
     "commentId":"",
     "question":"",
+    "answer":"",
     "accountId":"",
     "productId":"",
     "createdDate":"",
@@ -55,9 +57,11 @@ export class ListCommentComponent implements OnInit {
         "question": [`${res.data.question}`],
         "accountId" : [`${res.data.account.userName}`],
         "productId": [`${res.data.product.productName}`],
+        "image" : [`${res.data.product.image}`],
         "createdDate" : [`${res.data.createdDate}`],
         "updatedDate" : [`${res.data.updatedDate}`],
       })
+      this.image = this.formDetail.controls.image.value
     })
   }
 
@@ -68,10 +72,13 @@ export class ListCommentComponent implements OnInit {
         "commentId" : [`${res.data.commentId}`],
         "question": [`${res.data.question}`],
         "accountId" : [`${res.data.accountId}`],
+        "answer" : [`${res.data.answer}`],
         "productId": [`${res.data.productId}`],
+        "image" : [`${res.data.product.image}`],
         "createdDate" : [`${res.data.createdDate}`],
         "updatedDate" : [`${res.data.updatedDate}`],
       })
+      this.image = this.formUpdate.controls.image.value
     })
   }
 
@@ -85,7 +92,7 @@ export class ListCommentComponent implements OnInit {
       event.stopPropagation()
       return;
     }
-        
+
     let model = {
       ...this.formUpdate.value,
       updatedDate : new Date()
@@ -164,6 +171,24 @@ export class ListCommentComponent implements OnInit {
     this.pageSize = sizeValue
   }
 
+  onChanges(sortValue) {
+    this.commentService.SortByComment(sortValue).subscribe((res:any)=>{
+      console.log(res);
+      if(res.code == 200) {
+        this.listComment = res.data;
+      }else{
+        this.notification.showError(res.message,"Error")
+      }
+    });
+  }
+
+  onChangeProduct(event: any) {
+    const proId = event.target.value;
+    this.productService.GetProductById(proId).subscribe((res:any) => {
+      console.log(res);
+      this.image = res.data.image
+    })
+  }
   // hàm xuất Excel
   exportexcel(): void
   {

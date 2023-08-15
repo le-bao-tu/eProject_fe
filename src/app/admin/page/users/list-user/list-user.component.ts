@@ -189,6 +189,17 @@ private readFile(file: File): void {
       this.pageSize = sizeValue
     }
 
+    onChanges(sortValue) {
+      this.userService.SortByUser(sortValue).subscribe((res:any)=>{
+        console.log(res);
+        if(res.code == 200) {
+          this.listUsers = res.data;
+        }else{
+          this.notification.showError(res.message,"Error")
+        }
+      });
+    }
+
     // hàm xuất Excel
     exportexcel(): void
     {

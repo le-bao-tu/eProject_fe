@@ -3,11 +3,12 @@
       <li class="breadcrumb-item active" aria-current="page"><h4><i style="font-size:20px;padding:0 10px" class="fa">&#xf0ac;</i>Thêm mới bình luận</h4></li>
     </ol>
   </nav>
-  
+
     <div class="container" >
+      <h1 style="color:rgb(12, 1, 1);font-family: serif;">THÊM MỚI COMMENT</h1>
       <hr/>
       <form [formGroup]="infoForm"  method="post" role="form" class="login100-form validate-form" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-  
+
             <div class="wrap-input100 validate-input">
               <span style="font-weight: bold;">Nội dung</span>
               <input type="text" class="form-control" formControlName="question" style="margin:10px 0;border-radius: 3px;" placeholder="" >
@@ -41,10 +42,9 @@
               <span class="err" *ngIf="f.productId.errors.required">Bạn chưa nhập gì </span>
               </div>
           </div>
-    
+
             <div class="modal-footer">
                 <button type="submit"  class="btn btn-primary" data-dismiss="modal">Thêm mới</button>
             </div>
         </form>
     </div>
-  

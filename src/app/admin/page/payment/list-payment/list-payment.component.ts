@@ -116,7 +116,7 @@ export class ListPaymentComponent implements OnInit {
       event.stopPropagation()
       return;
     }
-        
+
     let model = {
       ...this.formUpdate.value,
       updatedDate : new Date()
@@ -151,6 +151,17 @@ export class ListPaymentComponent implements OnInit {
 
   onChange(sizeValue) {
     this.pageSize = sizeValue
+  }
+
+  onChanges(sortValue) {
+    this.paymentService.SortByPayment(sortValue).subscribe((res:any)=>{
+      console.log(res);
+      if(res.code == 200) {
+        this.listPayment = res.data;
+      }else{
+        this.notification.showError(res.message,"Error")
+      }
+    });
   }
 
   // hàm xuất Excel

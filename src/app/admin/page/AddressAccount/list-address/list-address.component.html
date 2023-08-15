@@ -16,10 +16,12 @@
     </div>
     <div  style="display:flex;align-items: baseline;margin: 0 30px;">
       <span for="exampleFormControlSelect1" style="font-weight: bold;">Sắp xếp</span>
-      <select class="form-control" (change)="onChange($event.target.value)" style="width:180px;margin-left:10px">
-        <option value="20">Ngày mới nhất</option>
-        <option value="40">Sắp xếp theo ký tự từ A-Z</option>
-        <option value="80">Sắp xếp theo ký tự từ Z-A</option>
+      <select class="form-control" (change)="onChanges($event.target.value)" style="width:180px;margin-left:10px">
+        <option value="">---- chọn -----</option>
+        <option value="addressid_asc">Sắp xếp theo id tăng dần</option>
+        <option value="addressid_desc">Sắp xếp theo id giảm dần</option>
+        <option value="address_asc">Sắp xếp theo ký tự từ Z-A</option>
+        <option value="address_desc">Sắp xếp theo ký tự từ Z-A</option>
       </select>
     </div>
     <div  style="display:flex;align-items: baseline;">
@@ -118,7 +120,8 @@
        </div>
         <div class="modal-body-content">
         <span>Account</span>
-        <input type="text" class="form-control" formControlName="accountId" style="margin:10px 0;border-radius: 3px; cursor: not-allowed;" placeholder="Enter . . ." readonly>
+        <input type="text" class="form-control" formControlName="accountName" style="margin:10px 0;border-radius: 3px; cursor: not-allowed;" placeholder="Enter . . ." readonly>
+        <input type="hidden" class="form-control" formControlName="accountId">
        </div>
        <div class="container-fluid">
         <div class="row">

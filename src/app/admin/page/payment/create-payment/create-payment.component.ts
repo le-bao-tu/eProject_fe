@@ -21,8 +21,8 @@ export class CreatePaymentComponent implements OnInit {
 
   infoForm = this.fb.group({
     "type":["", [Validators.required]],
-    "amount":[,[Validators.required]],
-    "bank":[""],
+    "amount":["",[Validators.required]],
+    "bank":["",[Validators.required]],
     "orderId":["",[Validators.required]]
   })
 
@@ -31,6 +31,12 @@ export class CreatePaymentComponent implements OnInit {
   }
 
   onSubmit(){
+  // đoạn này sẽ for check đièu kiện của form nếu không hợp lệ sẽ hiển thị ra lỗi
+  for (const i in this.infoForm.controls) {
+    this.infoForm.controls[i].markAsDirty();
+    this.infoForm.controls[i].updateValueAndValidity();
+  }
+
     let model = {
       ...this.infoForm.value
     }

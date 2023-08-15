@@ -85,7 +85,6 @@ onSubmit(){
   let model = {
     ...this.infoForm.value,
     image : this.imageBase64,
-    description: this.editorContent
   }
   this.productService.CreateProduct(model).subscribe((res:any)=>{
     console.log(res);

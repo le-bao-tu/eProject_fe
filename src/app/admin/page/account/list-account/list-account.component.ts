@@ -187,6 +187,17 @@ private readFile(file: File): void {
     this.pageSize = sizeValue
   }
 
+  onChanges(sortValue) {
+    this.accountService.SortByAccount(sortValue).subscribe((res:any)=>{
+      console.log(res);
+      if(res.code == 200) {
+        this.listAccount = res.data;
+      }else{
+        this.notification.showError(res.message,"Error")
+      }
+    });
+  }
+
   // hàm xuất Excel
   exportexcel(): void
   {

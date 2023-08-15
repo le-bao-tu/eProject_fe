@@ -15,6 +15,8 @@ export class ErorInterceptorService implements HttpInterceptor{
       catchError((err) => {
         if (err.status === 401) {
          this.router.navigate(['Medlatec/login'])
+        }else if (err.status === 403) {
+          this.router.navigate(['page/forbidden'])
         }
         return throwError("Có lỗi trong quá trình xử lí");
       })
