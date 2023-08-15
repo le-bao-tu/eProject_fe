@@ -23,7 +23,7 @@ export class CreateCommentComponent implements OnInit {
 
   infoForm = this.fb.group({
     "question":["",[Validators.required]],
-    "answer":["answer"],
+    "answer":[""],
     "accountId":["", [Validators.required]],
     "productId":["", [Validators.required]]
   })

@@ -51,7 +51,6 @@ export class ListProductComponent implements OnInit {
     "quantity": "",
     "price" : "",
     "salePrice" : "",
-
     "status" :"",
     "categoryId":"",
     "createdDate":'',

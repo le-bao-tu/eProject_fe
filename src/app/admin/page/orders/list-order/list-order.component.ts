@@ -135,7 +135,7 @@ export class ListOrderComponent implements OnInit {
       event.stopPropagation()
       return;
     }
-        
+
     let model = {
       ...this.formUpdate.value,
       updatedDate : new Date()
@@ -150,7 +150,7 @@ export class ListOrderComponent implements OnInit {
       }
     })
   }
-  
+
   DeleteOrder(id){
     if(confirm("Are you sure?")){
       this.orderService.DeleteOrder(id).subscribe((res:any) => {
@@ -186,5 +186,16 @@ export class ListOrderComponent implements OnInit {
     sortby(key){
       this.key = key;
       this.reverse = !this.reverse;
+    }
+
+    onChanges(sortValue) {
+      this.orderService.SortByOrder(sortValue).subscribe((res:any)=>{
+        console.log(res);
+        if(res.code == 200) {
+          this.listOrder = res.data;
+        }else{
+          this.notification.showError(res.message,"Error")
+        }
+      });
     }
 }

@@ -16,10 +16,12 @@
     </div>
     <div  style="display:flex;align-items: baseline;margin: 0 30px;">
       <span for="exampleFormControlSelect1" style="font-weight: bold;">Sắp xếp</span>
-      <select class="form-control" (change)="onChange($event.target.value)" style="width:180px;margin-left:10px">
-        <option value="20">Ngày mới nhất</option>
-        <option value="40">Sắp xếp theo ký tự từ A-Z</option>
-        <option value="80">Sắp xếp theo ký tự từ Z-A</option>
+      <select class="form-control" (change)="onChanges($event.target.value)" style="width:180px;margin-left:10px">
+        <option value="">------ Chọn -----</option>
+        <option value="paymentid_asc">Sắp xếp theo id tăng dần</option>
+        <option value="paymentid_desc">Sắp xếp theo id giảm dần</option>
+        <option value="create_asc">Sắp xếp theo ký tự từ Z-A</option>
+        <option value="create_desc">Sắp xếp theo ký tự từ Z-A</option>
       </select>
     </div>
     <div  style="display:flex;align-items: baseline;">

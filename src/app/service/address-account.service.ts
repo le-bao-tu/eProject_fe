@@ -7,6 +7,7 @@ const urlGetAddressAccountById = "http://localhost:19776/api/Address/get-address
 const urlCreateAddressAccount = "http://localhost:19776/api/Address/insert-address-account";
 const urlUpdateAddressAccount = "http://localhost:19776/api/Address/update-address-account";
 const urlDeleteAddressAccount = "http://localhost:19776/api/Address/delete-address-account";
+const urlSortByAddressAccount = "http://localhost:19776/api/Address/sortby-address";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,12 @@ export class AddressAccountService {
 
   DeleteAddressAccount(id):Observable<Object[]> {
     return this.http.get<Object[]>(urlDeleteAddressAccount + "?addressId="+id).pipe(
+      tap(() => console.log("OK"))
+    )
+  }
+
+  SortByAddress(sort:string):Observable<Object[]> {
+    return this.http.get<Object[]>(urlSortByAddressAccount+`?sort=${sort}`).pipe(
       tap(() => console.log("OK"))
     )
   }

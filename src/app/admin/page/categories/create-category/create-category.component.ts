@@ -20,7 +20,7 @@ export class CreateCategoryComponent implements OnInit {
   // check dữ liệu liệu form
   infoForm = this.fb.group({
     "categoryName":["",[Validators.required,Validators.maxLength(20),Validators.pattern('^[a-zA-Z0-9]+$')]],
-    "image":[[Validators.required]],
+    "image":["",[Validators.required]],
     "status":true,
 })
 
@@ -47,6 +47,7 @@ private readFile(file: File): void {
 
 
 ngOnInit():void {
+
 }
 
 get f() {

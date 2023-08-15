@@ -7,6 +7,7 @@ const urlGetCommentById = "http://localhost:19776/api/Comment/get-comment-by-id"
 const urlCreateComment = "http://localhost:19776/api/Comment/insert-comment";
 const urlUpdateComment = "http://localhost:19776/api/Comment/update-comment";
 const urlDeleteComment = "http://localhost:19776/api/Comment/delete-comment";
+const urlSortByComment = "http://localhost:19776/api/Comment/sortby-comment";
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,11 @@ export class CommentService {
 
   DeleteComment(id):Observable<Object[]> {
     return this.http.get<Object[]>(urlDeleteComment + `?commentId=${id}`);
+  }
+
+  SortByComment(sort:string):Observable<Object[]> {
+    return this.http.get<Object[]>(urlSortByComment+`?sort=${sort}`).pipe(
+      tap(() => console.log("OK"))
+    )
   }
 }

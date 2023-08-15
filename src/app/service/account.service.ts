@@ -9,6 +9,7 @@ const urlCreateAccount = "http://localhost:19776/api/Account/signup-account";
 const urlGetAccountById = "http://localhost:19776/api/Account/get-account-by-id";
 const urlDeleteAccount = "http://localhost:19776/api/Account/delete-account";
 const urlUpdateAccount = "http://localhost:19776/api/Account/update-account";
+const urlSortByAccount = "http://localhost:19776/api/Account/sortby-account";
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,12 @@ export class AccountService {
     return this.http.get<Object>(urlgetByNameTokenLogin+`?email=${email}`).pipe(
          tap(() => console.log("OK"),
       )
+    )
+  }
+
+  SortByAccount(sort:string):Observable<Object[]> {
+    return this.http.get<Object[]>(urlSortByAccount+`?sort=${sort}`).pipe(
+      tap(() => console.log("OK"))
     )
   }
 }

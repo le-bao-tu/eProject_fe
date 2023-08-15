@@ -8,6 +8,8 @@ const urlGetUserById  = "http://localhost:19776/api/user/get-user-by-id"
 const urlCreateUser  = "http://localhost:19776/api/user/create-user"
 const urlUpdateUser  = "http://localhost:19776/api/user/update-user"
 const urlDeleteUser  = "http://localhost:19776/api/user/delete-user"
+const urlSortByUser  = "http://localhost:19776/api/user/sortby-user"
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,13 +29,13 @@ export class UserService {
   }
 
   GetUserById(Id:any):Observable<Object> {
-    return this.http.get<Object>(urlGetUserById+`?userId=${Id}`); 
+    return this.http.get<Object>(urlGetUserById+`?userId=${Id}`);
   }
 
   CreateUser(data:Object):Observable<Object[]> {
-    return this.http.post<Object[]>(urlCreateUser, data); 
+    return this.http.post<Object[]>(urlCreateUser, data);
   }
-  
+
   UpdateUser(data:Object):Observable<Object> {
     return this.http.post<Object>(urlUpdateUser,data);
   }
@@ -42,4 +44,9 @@ export class UserService {
     return this.http.get<Object[]>(urlDeleteUser + `?userId=${id}`);
   }
 
+  SortByUser(sort:string):Observable<Object[]> {
+    return this.http.get<Object[]>(urlSortByUser+`?sort=${sort}`).pipe(
+      tap(() => console.log("OK"))
+    )
+  }
 }

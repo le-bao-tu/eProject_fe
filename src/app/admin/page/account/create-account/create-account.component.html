@@ -3,11 +3,12 @@
       <li class="breadcrumb-item active" aria-current="page"><h4><i style="font-size:20px;padding:0 10px" class="fa">&#xf0ac;</i>Thêm mới người dùng</h4></li>
     </ol>
   </nav>
-  
+
     <div class="container" >
+      <h1 style="color:rgb(12, 1, 1);font-family: serif;">THÊM MỚI NGƯỜI DÙNG</h1>
       <hr/>
       <form [formGroup]="infoForm"  method="post" role="form" class="login100-form validate-form" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-  
+
         <div class="wrap-input100 validate-input">
           <span style="font-weight: bold;">Tên người dùng</span>
           <input type="text" class="form-control" formControlName="userName" style="margin:10px 0;border-radius: 3px;" placeholder="Chỉ nhập kí tự [a-zA-Z_0-9] tối đa 50 kí tự" >
@@ -39,7 +40,7 @@
       </div>
         <div class="wrap-input100 validate-input">
           <span style="font-weight: bold;">Địa chỉ</span>
-          <input type="text" class="form-control" formControlName="address" style="margin:10px 0;border-radius: 3px;" placeholder="" >
+          <input type="text" class="form-control" formControlName="address" style="margin:10px 0;border-radius: 3px;" placeholder="Nhập địa chỉ . . ." >
         </div>
       <div *ngIf="f.address.dirty || f.address.touched">
         <div *ngIf="f.address.errors">
@@ -74,10 +75,9 @@
         <span class="err" *ngIf="f.avatar.errors.required">Bạn chưa nhập gì </span>
       </div>
     </div>
-      
+
       <div class="modal-footer">
         <button type="submit"  class="btn btn-primary" data-dismiss="modal">Thêm mới</button>
       </div>
     </form>
     </div>
-  
