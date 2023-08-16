@@ -20,6 +20,8 @@ export class ListOrderComponent implements OnInit {
   pageSize:number = 20;
   message:any;
   fileName= 'ExcelSheet.xlsx';
+  stateName:any;
+  listProductDetail = [];
 
   onChange(sizeValue) {
     this.pageSize = sizeValue
@@ -34,7 +36,7 @@ export class ListOrderComponent implements OnInit {
     "state":"",
     "cancellationReason":"",
     "feedback" : "",
-    "accountId" : "",
+    "accountName" : "",
     "createdDate":"",
     "updatedDate" : "",
   });
@@ -48,33 +50,51 @@ export class ListOrderComponent implements OnInit {
     "state":"",
     "cancellationReason":"",
     "feedback" : "",
+    "accountName" : "",
     "accountId" : "",
     "createdDate":"",
     "updatedDate" : "",
   })
 
+  list = [
+    {state : 0, name : "Chờ xác nhận"},
+    {state : 1, name : "Đang lấy hàng"},
+    {state : 2, name : "Đang giao hàng"},
+    {state : 3, name : "Giao hàng thành công"},
+    {state : 4, name : "Đơn hủy"}
+   ]
+
   ShowOrderDetail(id:any) {
     this.orderService.GetOrderById(id).subscribe((res:any) =>{
       console.log(res)
+      for (let state of this.list)  {
+        if(state.state == res.data.state) {
+          this.stateName = state.name;
+        }
+      }
       this.formDetail = this.fb.group({
         "orderId" : [`${res.data.orderId}`],
         "email": [`${res.data.email}`],
         "phone": [`${res.data.phone}`],
         "address": [`${res.data.address}`],
         "totalPrice": [`${res.data.totalPrice}`],
-        "state": [`${res.data.state}`],
+        "state": [`${ this.stateName}`],
         "cancellationReason": [`${res.data.cancellationReason}`],
         "feedback" : [`${res.data.feedback}`],
-        "accountId" : [`${res.data.account.userName}`],
+        "accountName" : [`${res.data.account.userName}`],
         "createdDate" : [`${res.data.createdDate}`],
         "updatedDate" : [`${res.data.updatedDate}`],
       })
     })
   }
 
+
+
   ShowFormUpdateDetail(id:any) {
     this.orderService.GetOrderById(id).subscribe((res:any) =>{
       console.log(res)
+      this.listProductDetail = res.data.listProduct;
+      console.log(this.listProductDetail)
       this.formUpdate = this.fb.group({
         "orderId" : [`${res.data.orderId}`],
         "email": [`${res.data.email}`],
@@ -84,7 +104,8 @@ export class ListOrderComponent implements OnInit {
         "state": [`${res.data.state}`],
         "cancellationReason": [`${res.data.cancellationReason}`],
         "feedback" : [`${res.data.feedback}`],
-        "accountId" : [`${res.data.account.userName}`],
+        "accountName" : [`${res.data.account.userName}`],
+        "accountId" : [`${res.data.accountId}`],
         "createdDate" : [`${res.data.createdDate}`],
         "updatedDate" : [`${res.data.updatedDate}`],
       })
@@ -178,6 +199,7 @@ export class ListOrderComponent implements OnInit {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     /* save to file */
+    XLSX.writeFile(wb, this.fileName);
   }
 
     // hàm sắp xếp
