@@ -47,7 +47,7 @@ private readFile(file: File): void {
 
 
 ngOnInit():void {
-
+  this.onSubmit();
 }
 
 get f() {

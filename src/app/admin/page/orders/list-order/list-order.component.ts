@@ -72,6 +72,7 @@ export class ListOrderComponent implements OnInit {
           this.stateName = state.name;
         }
       }
+      this.listProductDetail = res.data.listProduct;
       this.formDetail = this.fb.group({
         "orderId" : [`${res.data.orderId}`],
         "email": [`${res.data.email}`],
