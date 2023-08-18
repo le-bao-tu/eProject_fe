@@ -22,6 +22,7 @@ export class CreateProductComponent implements OnInit {
 
   ngOnInit() {
     this.GetAllCategory();
+    this.onSubmit();
   }
 
   infoForm = this.fb.group({
@@ -96,8 +97,4 @@ onSubmit(){
     }
   })
 }
-
-
-
-
 }

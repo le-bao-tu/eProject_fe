@@ -53,12 +53,12 @@
         <td>{{item.email}}</td>
         <td>{{item.phone}}</td>
         <td>{{item.address}}</td>
-        <td>{{item.totalPrice}}</td>
+        <td>{{item.totalPrice}} $</td>
         <td>{{item.account.userName}}</td>
         <td>
-          <small _ngcontent-aye-c2="" style="color:rgb(0, 172, 86)" class="label bg-info">{{item.state == 0?"Chờ xác nhận":""}}</small>
-          <small _ngcontent-aye-c2="" style="color:rgb(0, 172, 86)" class="label bg-info">{{item.state == 1?"Chờ lấy hàng":""}}</small>
-          <small _ngcontent-aye-c2="" style="color:rgb(0, 78, 247)" class="label bg-info">{{item.state == 2?"Đang giao hàng":""}}</small>
+          <small _ngcontent-aye-c2="" style="color:rgb(204, 0, 0)" class="label bg-info">{{item.state == 0?"Chờ xác nhận":""}}</small>
+          <small _ngcontent-aye-c2="" style="color:rgb(23, 124, 255)" class="label bg-info">{{item.state == 1?"Đang lấy hàng":""}}</small>
+          <small _ngcontent-aye-c2="" style="color:rgb(64, 75, 5)" class="label bg-info">{{item.state == 2?"Đang giao hàng":""}}</small>
           <small _ngcontent-aye-c2="" style="color:rgb(199, 23, 235)" class="label bg-info">{{item.state == 3?"Giao hàng thành công":""}}</small>
           <small _ngcontent-aye-c2="" style="color:rgb(0, 196, 98)" class="label bg-red">{{item.state == 4?"Đơn hủy":""}}</small>
         </td>
@@ -113,6 +113,26 @@
         <span>Feedback</span>
         <input type="text" class="form-control" formControlName="feedback" style="margin:10px 0;border-radius: 3px; cursor: not-allowed;" placeholder="" readonly>
        </div>
+
+       <div  class="container-fluid" style="overflow-y: scroll;height: 300px;">
+        <div *ngFor="let item of listProductDetail" class="wrapper">
+          <div class="product-img">
+            <img src="http://localhost:19776/api/Product/get-product-image?image={{item.image}}" style="width: 214px;height: 300px;">
+          </div>
+          <div class="product-info">
+            <div class="product-text">
+              <h1>{{item.productName}}</h1>
+              <div style="margin-left: 38px;">
+              <span>Price : {{item.price}} VND</span>
+              <span style="margin-left: 10px;">SalePrice : {{item.salePrice}} VND</span>
+              </div>
+              <h2>by studio and friends</h2>
+              <p>Harvest Vases are a reinterpretation<br> of peeled fruits and vegetables as<br> functional objects. The surfaces </p>
+            </div>
+          </div>
+        </div>
+       </div>
+
        <div class="container-fluid">
         <div class="row">
           <div style="padding-left: 0;" class="col-md-6" >
